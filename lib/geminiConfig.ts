@@ -3,18 +3,18 @@ import { serializeError } from './apiHelper';
 /**
  * Centralized Gemini Model Configuration
  * 
- * Verified against live API key diagnostics (sorted by latency):
- * 1. gemini-3.5-flash-lite (~797ms) -> PRIMARY
- * 2. gemini-3.6-flash (~2059ms)    -> FALLBACK 1
- * 3. gemini-flash-latest (~8813ms) -> FALLBACK 2
+ * Confirmed standard models:
+ * - gemini-2.5-flash (Primary)
+ * - gemini-2.5-flash-lite (Fallback 1)
+ * - gemini-flash-latest (Fallback 2)
  */
-export const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
+export const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 
 export const GEMINI_CANDIDATE_MODELS: readonly string[] = Object.freeze(
   [
     GEMINI_MODEL,
-    'gemini-3.5-flash-lite',
-    'gemini-3.6-flash',
+    'gemini-2.5-flash',
+    'gemini-2.5-flash-lite',
     'gemini-flash-latest',
   ].filter((val, idx, self) => self.indexOf(val) === idx)
 );

@@ -24,7 +24,6 @@ import { clsx } from 'clsx';
 import { rasterizePdfOrImage } from '@/lib/pdfRasterizer';
 import type { ProcessedDocument } from '@/lib/types';
 import { GeminiErrorBanner, GeminiErrorInfo } from '@/components/ui/GeminiErrorBanner';
-import { DevDebugControls, SimulatedErrorType } from './DevDebugControls';
 import { ApiErrorResponse, ApiErrorCode, serializeError } from '@/lib/apiHelper';
 
 export type StepState = 'pending' | 'in-progress' | 'done' | 'error';
@@ -639,116 +638,6 @@ export const ProcessingScreen: React.FC<ProcessingScreenProps> = ({
   };
 
   // =========================================================================
-  // DEV-ONLY Error Simulation Handler
-  // =========================================================================
-  const handleSimulateStageError = (stage: 1 | 2 | 3, type: SimulatedErrorType) => {
-    setIsAllDone(false);
-
-    if (type === 'server_error') {
-      const errorMsg = `Simulated 500 Internal Server Error in Stage ${stage} (Dev Test)`;
-      triggerStageFailure(
-        stage,
-        {
-          error: errorMsg,
-          code: 'INTERNAL_ERROR',
-          statusCode: 500,
-          details: `Simulated 500 Internal Server Error in Stage ${stage} for developer testing.`,
-          rawResponse: { simulated: true, type, stage, timestamp: new Date().toISOString() },
-        },
-        '0.4'
-      );
-    } else if (type === 'timeout') {
-      const errorMsg = `Stage ${stage} Gemini request timed out after 45.0s (threshold: 45s).`;
-      triggerStageFailure(
-        stage,
-        {
-          error: errorMsg,
-          code: 'TIMEOUT',
-          statusCode: 504,
-          isTimeout: true,
-          details: `Request timed out after 45.0s (threshold: 45s). The model took too long to process. Click Retry.`,
-          rawResponse: { simulated: true, type, stage, elapsedSeconds: 45.0 },
-        },
-        '45.0'
-      );
-    } else if (type === 'rate_limit') {
-      const errorMsg = `RESOURCE_EXHAUSTED: Gemini API rate limit / quota exceeded for Stage ${stage} (HTTP 429). Free tier limit is 15 RPM.`;
-      triggerStageFailure(
-        stage,
-        {
-          error: errorMsg,
-          code: 'RATE_LIMIT_EXCEEDED',
-          statusCode: 429,
-          isRateLimit: true,
-          details: `Rate limit / quota exceeded (HTTP 429) after 1.2s. Free tier limit is 15 RPM. Wait ~30s before retrying.`,
-          rawResponse: { simulated: true, type, stage, status: 429, statusText: 'RESOURCE_EXHAUSTED' },
-        },
-        '1.2'
-      );
-    } else if (type === 'invalid_key') {
-      const errorMsg = `API_KEY_INVALID: The provided Gemini API Key is invalid or expired (HTTP 401).`;
-      triggerStageFailure(
-        stage,
-        {
-          error: errorMsg,
-          code: 'INVALID_API_KEY',
-          statusCode: 401,
-          isAuthError: true,
-          details: `Invalid Gemini API Key (HTTP 401) configured in .env.local.`,
-          rawResponse: { simulated: true, type, stage, status: 401, statusText: 'UNAUTHENTICATED' },
-        },
-        '0.8'
-      );
-    }
-  };
-
-  const handleResetPipeline = () => {
-    if (!questionDoc || !answerDoc) return;
-    setGlobalError(null);
-    setIsAllDone(false);
-    setExtractedQuestions(null);
-    setExtractedAnswers(null);
-    setOverallProgress(25);
-    setSteps([
-      {
-        id: 'step-1',
-        number: 1,
-        title: 'Question Paper Extraction',
-        description: 'Identifies numbering structure, subparts (11a, 11b), and mark weights.',
-        state: 'pending',
-        details: 'Restarting pipeline...',
-      },
-      {
-        id: 'step-2',
-        number: 2,
-        title: 'Handwritten Answer OCR & Coordinates',
-        description: 'Detects answer bounding boxes with normalized coordinates [ymin, xmin, ymax, xmax].',
-        state: 'pending',
-        details: 'Awaiting Question Paper schema...',
-      },
-      {
-        id: 'step-3',
-        number: 3,
-        title: 'Spatial Mapping & Highlight',
-        description: 'Aligns out-of-order, unanswered, or unmatched answers with exact interactive overlays.',
-        state: 'pending',
-        details: 'Awaiting bounding boxes & answer tokens...',
-      },
-    ]);
-    addLog(`🔄 Resetting and re-running complete 3-step pipeline...`);
-    
-    (async () => {
-      const qList = await executeStage1(questionDoc);
-      if (qList) {
-        const aList = await executeStage2(answerDoc);
-        if (aList) {
-          await executeStage3(qList, aList, questionDoc, answerDoc);
-        }
-      }
-    })();
-  };
-
-  // =========================================================================
   // Initial Pipeline Execution on Mount
   // =========================================================================
   useEffect(() => {
@@ -855,14 +744,6 @@ export const ProcessingScreen: React.FC<ProcessingScreenProps> = ({
           </button>
         </div>
       </div>
-
-      {/* DEV ONLY: Interactive Failure & Timeout Debug Controls (visible only in development) */}
-      {process.env.NODE_ENV === 'development' && (
-        <DevDebugControls 
-          onSimulateStageError={handleSimulateStageError} 
-          onResetPipeline={handleResetPipeline}
-        />
-      )}
 
       {/* Global Toast/Banner for Gemini Rate Limit, Invalid API Key, or Timeout */}
       <GeminiErrorBanner
