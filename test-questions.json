@@ -1,0 +1,42 @@
+[
+  {
+    "number": "1",
+    "text": "State Newton's Second Law of Motion. [4 Marks]",
+    "pageIndex": 0
+  },
+  {
+    "number": "2",
+    "text": "Calculate acceleration given force = 50N and mass = 10kg. [6 Marks]",
+    "pageIndex": 0
+  },
+  {
+    "number": "3",
+    "text": "Define conservation of energy in an isolated system. [4 Marks]",
+    "pageIndex": 0
+  },
+  {
+    "number": "4",
+    "text": "Explain the principle of Archimedes with an example. [5 Marks]",
+    "pageIndex": 0
+  },
+  {
+    "number": "6(a)",
+    "text": "Derive kinematic equation v^2 = u^2 + 2as. [5 Marks]",
+    "pageIndex": 1
+  },
+  {
+    "number": "6(b)",
+    "text": "Explain why frictional force opposes relative motion. [3 Marks]",
+    "pageIndex": 1
+  },
+  {
+    "number": "8(i)",
+    "text": "Define simple harmonic motion (SHM). [3 Marks]",
+    "pageIndex": 1
+  },
+  {
+    "number": "8(ii)",
+    "text": "Calculate the time period of a simple pendulum with length 1 meter on Earth (g = 9.8 m/s^2). [5 Marks]",
+    "pageIndex": 1
+  }
+]

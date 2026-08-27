@@ -1,0 +1,93 @@
+[
+  {
+    "id": "ans_0_1",
+    "questionNumberGuess": "1",
+    "text": "Newton's 2nd Law states that the rate of change of momentum is proportional to the applied external force: F = ma.",
+    "pageIndex": 0,
+    "bbox": {
+      "ymin": 0.08,
+      "xmin": 0.06,
+      "ymax": 0.22,
+      "xmax": 0.94
+    },
+    "continuesFromPageIndex": null
+  },
+  {
+    "id": "ans_0_2",
+    "questionNumberGuess": "2",
+    "text": "Given F = 50 N, m = 10 kg. Using F = ma, a = F / m = 50 / 10 = 5 m/s^2.",
+    "pageIndex": 0,
+    "bbox": {
+      "ymin": 0.25,
+      "xmin": 0.06,
+      "ymax": 0.42,
+      "xmax": 0.92
+    },
+    "continuesFromPageIndex": null
+  },
+  {
+    "id": "ans_0_3",
+    "questionNumberGuess": "6(a)",
+    "text": "v = u + at. s = ut + 1/2 at^2. From (1), t = (v - u)/a. Substituting t gives v^2 = u^2 + 2as.",
+    "pageIndex": 0,
+    "bbox": {
+      "ymin": 0.46,
+      "xmin": 0.06,
+      "ymax": 0.68,
+      "xmax": 0.94
+    },
+    "continuesFromPageIndex": null
+  },
+  {
+    "id": "ans_0_4",
+    "questionNumberGuess": null,
+    "text": "Rough work: calculating integral of v dt and checking units [m/s].",
+    "pageIndex": 0,
+    "bbox": {
+      "ymin": 0.72,
+      "xmin": 0.06,
+      "ymax": 0.90,
+      "xmax": 0.55
+    },
+    "continuesFromPageIndex": null
+  },
+  {
+    "id": "ans_1_1",
+    "questionNumberGuess": "6(b)",
+    "text": "Frictional force arises due to microscopic interlocking between irregularities on contact surfaces.",
+    "pageIndex": 1,
+    "bbox": {
+      "ymin": 0.08,
+      "xmin": 0.06,
+      "ymax": 0.25,
+      "xmax": 0.92
+    },
+    "continuesFromPageIndex": null
+  },
+  {
+    "id": "ans_1_2",
+    "questionNumberGuess": "8(i)",
+    "text": "Simple Harmonic Motion is periodic motion where restoring force is directly proportional to displacement: F = -kx.",
+    "pageIndex": 1,
+    "bbox": {
+      "ymin": 0.28,
+      "xmin": 0.06,
+      "ymax": 0.48,
+      "xmax": 0.94
+    },
+    "continuesFromPageIndex": null
+  },
+  {
+    "id": "ans_1_3",
+    "questionNumberGuess": "8(ii)",
+    "text": "T = 2 * pi * sqrt(L / g) = 2 * 3.1416 * sqrt(1 / 9.8) = 6.283 * 0.3194 = 2.007 seconds.",
+    "pageIndex": 1,
+    "bbox": {
+      "ymin": 0.52,
+      "xmin": 0.06,
+      "ymax": 0.78,
+      "xmax": 0.94
+    },
+    "continuesFromPageIndex": 0
+  }
+]
